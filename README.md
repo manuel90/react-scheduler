@@ -11,7 +11,7 @@ For documentation, features, and additional usage examples, visit the [original 
 > :warning: **Notice**: This component uses `mui`/`emotion`/`date-fns`. if your project is not already using these libs, this component may not be suitable.
 
 ```jsx
-npm i @manuel90/react-scheduler
+npm i @mlopezlara90/react-scheduler
 ```
 
 If you plan to use `recurring` events in your scheduler, install `rrule` [package](https://www.npmjs.com/package/rrule)
@@ -19,7 +19,7 @@ If you plan to use `recurring` events in your scheduler, install `rrule` [packag
 ## Usage
 
 ```jsx
-import { Scheduler } from "@manuel90/react-scheduler";
+import { Scheduler } from "@mlopezlara90/react-scheduler";
 ```
 
 ## Example
@@ -64,8 +64,8 @@ Here are the original props supported by the library. <br>
 Used to help manage and control the internal state of the `Scheduler` component from outside of `Scheduler` props, Example:
 
 ```js
-import { Scheduler } from "@manuel90/react-scheduler";
-import type { SchedulerRef } from "@manuel90/react-scheduler/types"
+import { Scheduler } from "@mlopezlara90/react-scheduler";
+import type { SchedulerRef } from "@mlopezlara90/react-scheduler/types"
 
 const SomeComponent = () => {
   const calendarRef = useRef<SchedulerRef>(null);
