@@ -53,7 +53,12 @@ const WeekDateBtn = ({ selectedDate, onChange, weekProps }: WeekDateBtnProps) =>
         disabled={prevDisabled}
         aria-label="previous week"
       />
-      <Button className="rs__selection rs__selected_week" style={{ padding: 4 }} onClick={handleOpen} aria-label="selected week">
+      <Button
+        className="rs__selection rs__selected_week"
+        style={{ padding: 4 }}
+        onClick={handleOpen}
+        aria-label="selected week"
+      >
         {`${format(weekStart, "dd", { locale })} - ${format(weekEnd, "dd MMM yyyy", {
           locale,
         })}`}

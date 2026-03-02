@@ -86,7 +86,9 @@ const AgendaEventsList = ({ day, events }: AgendaEventsListProps) => {
               <ListItemAvatar className="rs__agenda_item_avatar">
                 <Avatar
                   sx={{
-                    bgcolor: event.disabled ? "var(--rs-disabled-background, #d0d0d0)" : event.color || theme.palette.primary.main,
+                    bgcolor: event.disabled
+                      ? "var(--rs-disabled-background, #d0d0d0)"
+                      : event.color || theme.palette.primary.main,
                     color: event.disabled
                       ? "var(--rs-disabled-color, #808080)"
                       : event.textColor || theme.palette.primary.contrastText,
@@ -95,7 +97,11 @@ const AgendaEventsList = ({ day, events }: AgendaEventsListProps) => {
                   {event.agendaAvatar || " "}
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText className="rs__agenda_item_text" primary={event.title} secondary={`${startDate} - ${endDate}`} />
+              <ListItemText
+                className="rs__agenda_item_text"
+                primary={event.title}
+                secondary={`${startDate} - ${endDate}`}
+              />
             </ListItemButton>
           );
         })}

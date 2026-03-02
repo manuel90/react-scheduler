@@ -102,8 +102,12 @@ const MonthTable = ({ daysList, resource, eachWeekStart }: Props) => {
                       height: 27,
                       position: "absolute",
                       top: 0,
-                      background: isToday ? `var(--rs-today-background, ${theme.palette.secondary.main})` : "transparent",
-                      color: isToday ? `var(--rs-today-color, ${theme.palette.secondary.contrastText})` : "",
+                      background: isToday
+                        ? `var(--rs-today-background, ${theme.palette.secondary.main})`
+                        : "transparent",
+                      color: isToday
+                        ? `var(--rs-today-color, ${theme.palette.secondary.contrastText})`
+                        : "",
                       marginBottom: 2,
                     }}
                   >

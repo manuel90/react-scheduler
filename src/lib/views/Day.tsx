@@ -147,7 +147,12 @@ const Day = () => {
       return (
         <>
           {/* Header */}
-          <TableGrid className="rs__tablegrid_header" days={1} sticky="1" stickyNavigation={stickyNavigation}>
+          <TableGrid
+            className="rs__tablegrid_header"
+            days={1}
+            sticky="1"
+            stickyNavigation={stickyNavigation}
+          >
             <span className="rs__cell rs__time rs__timecell">
               <AccessTimeIcon sx={{ fontSize: 14 }} />
             </span>

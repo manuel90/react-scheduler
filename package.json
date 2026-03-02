@@ -9,6 +9,7 @@
   "scripts": {
     "start": "vite serve",
     "build": "vite build --mode production",
+    "postbuild": "node ./scripts/post-build.js",
     "local:pack": "npm run build && cd dist && npm pack && mv *.tgz ../",
     "format": "prettier --check \"**/*.{js,jsx,ts,tsx,json}\"",
     "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",

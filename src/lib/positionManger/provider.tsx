@@ -68,7 +68,7 @@ export const PositionProvider = ({ children }: Props) => {
   const [state, set] = useState<PositionManagerState>({
     renderedSlots: setEventPositionsWithResources(events, resources, resourceFields, fields, view),
   });
-  
+
   const onHandleSetPositionManagerState = useEffectEvent(() => {
     set((prev) => ({
       ...prev,

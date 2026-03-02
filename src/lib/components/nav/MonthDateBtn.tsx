@@ -46,7 +46,12 @@ const MonthDateBtn = ({ selectedDate, onChange }: MonthDateBtnProps) => {
         disabled={prevDisabled}
         aria-label="previous month"
       />
-      <Button className="rs__selection rs__selected_month" style={{ padding: 4 }} onClick={handleOpen} aria-label="selected month">
+      <Button
+        className="rs__selection rs__selected_month"
+        style={{ padding: 4 }}
+        onClick={handleOpen}
+        aria-label="selected month"
+      >
         {format(selectedDate, "MMMM yyyy", { locale })}
       </Button>
       <Popover
