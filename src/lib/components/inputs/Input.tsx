@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useEffectEvent } from "react";
 import { TextField, Typography } from "@mui/material";
 import useStore from "../../hooks/useStore";
-import { ValueRecord } from "../../types";
 
 interface EditorInputProps {
   variant?: "standard" | "filled" | "outlined";
@@ -17,7 +16,7 @@ interface EditorInputProps {
   rows?: number;
   value: string;
   name: string;
-  onChange(name: string, value: ValueRecord, isValid: boolean): void;
+  onChange(name: string, value: string, isValid: boolean): void;
   touched?: boolean;
 }
 
@@ -94,7 +93,7 @@ const EditorInput = ({
       onHandleChange(value);
     }
   }, [touched, value]);
-  
+
   return (
     <TextField
       variant={variant}

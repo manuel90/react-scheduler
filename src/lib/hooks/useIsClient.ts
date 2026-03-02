@@ -12,6 +12,6 @@ const useIsClient = () => {
   }, []);
 
   return isClient;
-}
+};
 
 export default useIsClient;

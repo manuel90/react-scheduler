@@ -34,6 +34,6 @@ const useWindowResize = () => {
   }, []);
 
   return state;
-}
+};
 
 export default useWindowResize;

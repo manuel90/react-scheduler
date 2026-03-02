@@ -100,7 +100,7 @@ const MonthEvents = ({
       elements.push(
         <div
           key={`${event.event_id}_${i}`}
-          className={`rs__multi_day rs__event__item ${events[i].type ? 'rs__item_type_' + events[i].type : ""}`}
+          className={`rs__multi_day rs__event__item ${events[i].type ? "rs__item_type_" + events[i].type : ""}`}
           style={{
             top: topSpace,
             width: `${100 * eventLength}%`,

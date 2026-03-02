@@ -19,7 +19,6 @@ import {
   ProcessedEvent,
   ResourceFields,
   SchedulerProps,
-  ValueRecord,
 } from "../types";
 import { StateEvent } from "../views/Editor";
 
@@ -36,22 +35,22 @@ export const getOneView = (state: Partial<SchedulerProps>): View => {
 
 export const getAvailableViews = (state: SchedulerProps) => {
   const views: View[] = [];
-  if (state.day) {
-    views.push("day");
+  if (state.month) {
+    views.push("month");
   }
   if (state.week) {
     views.push("week");
   }
-  if (state.month) {
-    views.push("month");
+  if (state.day) {
+    views.push("day");
   }
   return views;
 };
 
-export const arraytizeFieldVal = (field: FieldProps, val: ValueRecord | ValueRecord[], event?: StateEvent) => {
+export const arraytizeFieldVal = (field: FieldProps, val: any, event?: StateEvent) => {
   const arrytize = field.config?.multiple && !Array.isArray(event?.[field.name] || field.default);
   const value = arrytize ? (val ? [val] : []) : val;
-  const validity = arrytize ? (typeof(value) === 'string' ? value.length : value) : value;
+  const validity = arrytize ? value.length : value;
   return { value, validity };
 };
 
@@ -65,26 +64,23 @@ export const getResourcedEvents = (
   const resourceField = fields.find((f) => f.name === keyName);
   const isMultiple = !!resourceField?.config?.multiple;
 
-  const resourcedEvents: ProcessedEvent[] = [];
+  const resourcedEvents = [];
 
   for (const event of events) {
     // Handle single select & multiple select accordingly
-    const value: ValueRecord | ValueRecord[] = event[keyName];
-    const arrytize = isMultiple && !Array.isArray(value);
-    const eventVal = arrytize ? [value] : value;
+    const arrytize = isMultiple && !Array.isArray(event[keyName]);
+    const eventVal = arrytize ? [event[keyName]] : event[keyName];
 
     const isThisResource =
       isMultiple || Array.isArray(eventVal)
-        ? Array.isArray(eventVal) && eventVal.includes(resource[keyName])
+        ? eventVal.includes(resource[keyName])
         : eventVal === resource[keyName];
 
     if (isThisResource) {
-      const colorVal: string = event.color || (resourceFields.colorField ? resource[resourceFields.colorField] as string : "");
-      const valResource: ProcessedEvent = {
+      resourcedEvents.push({
         ...event,
-        color: colorVal,
-      };
-      resourcedEvents.push(valResource);
+        color: event.color || resource[resourceFields.colorField || ""],
+      });
     }
   }
 

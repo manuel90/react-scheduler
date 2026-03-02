@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@mui/material";
-import useCellAttribute from "../../hooks/useCellAttributes";
+import useCellAttributes from "../../hooks/useCellAttributes";
 import { CellRenderedProps } from "../../types";
 import useIsClient from "../../hooks/useIsClient";
 
@@ -43,8 +43,7 @@ const Cell = ({
 
   return (
     <>
-    {
-      isClient && (
+      {isClient && (
         <Button
           fullWidth
           aria-label={`${start.toLocaleString("en", {
@@ -56,8 +55,7 @@ const Cell = ({
         >
           {children}
         </Button>
-      )
-    }
+      )}
     </>
   );
 };

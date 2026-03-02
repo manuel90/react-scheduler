@@ -103,7 +103,9 @@ const Navigation = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <NavigationDiv className="rs__navigation" sticky={stickyNavigation ? "1" : "0"}>
-      <div className="rs__date_navigator" data-testid="date-navigator">{navigation && renderDateSelector()}</div>
+      <div className="rs__date_navigator" data-testid="date-navigator">
+        {navigation && renderDateSelector()}
+      </div>
       {children}
       <div
         className="rs__view_navigator"
@@ -142,26 +144,27 @@ const Navigation = ({ children }: { children?: React.ReactNode }) => {
 
         {views.length > 1 &&
           (isDesktop ? (
-            <Box className="rs__navigation_view_buttons" sx={{
-              display: 'flex',
-              gap: '10px',
-            }}>
-              {
-                views.map((v) => (
-                  <Button
-                    key={v}
-                    color={v === view ? "primary" : "inherit"}
-                    className={`rs__navigation_button ${v === view ? 'rs__active' : ''}`}
-                    onClick={() => handleChangeView(v)}
-                    onDragOver={(e) => {
-                      e.preventDefault();
-                      handleChangeView(v);
-                    }}
-                  >
-                    {translations.navigation[v]}
-                  </Button>
-                ))
-              }
+            <Box
+              className="rs__navigation_view_buttons"
+              sx={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              {views.map((v) => (
+                <Button
+                  key={v}
+                  color={v === view ? "primary" : "inherit"}
+                  className={`rs__navigation_button ${v === view ? "rs__active" : ""}`}
+                  onClick={() => handleChangeView(v)}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    handleChangeView(v);
+                  }}
+                >
+                  {translations.navigation[v]}
+                </Button>
+              ))}
             </Box>
           ) : (
             <Fragment>
