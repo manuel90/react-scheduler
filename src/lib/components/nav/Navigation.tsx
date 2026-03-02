@@ -7,6 +7,7 @@ import {
   MenuList,
   MenuItem,
   IconButton,
+  Box,
 } from "@mui/material";
 import { WeekDateBtn } from "./WeekDateBtn";
 import { DayDateBtn } from "./DayDateBtn";
@@ -19,7 +20,7 @@ import { getTimeZonedDate } from "../../helpers/generals";
 
 export type View = "month" | "week" | "day";
 
-const Navigation = () => {
+const Navigation = ({ children }: { children?: React.ReactNode }) => {
   const {
     selectedDate,
     view,
@@ -68,23 +69,29 @@ const Navigation = () => {
       case "month":
         return (
           month?.navigation && (
-            <MonthDateBtn selectedDate={selectedDate} onChange={handleSelectedDateChange} />
+            <div className="rs__date_navigator_inner">
+              <MonthDateBtn selectedDate={selectedDate} onChange={handleSelectedDateChange} />
+            </div>
           )
         );
       case "week":
         return (
           week?.navigation && (
-            <WeekDateBtn
-              selectedDate={selectedDate}
-              onChange={handleSelectedDateChange}
-              weekProps={week!}
-            />
+            <div className="rs__date_navigator_inner">
+              <WeekDateBtn
+                selectedDate={selectedDate}
+                onChange={handleSelectedDateChange}
+                weekProps={week!}
+              />
+            </div>
           )
         );
       case "day":
         return (
           day?.navigation && (
-            <DayDateBtn selectedDate={selectedDate} onChange={handleSelectedDateChange} />
+            <div className="rs__date_navigator_inner">
+              <DayDateBtn selectedDate={selectedDate} onChange={handleSelectedDateChange} />
+            </div>
           )
         );
       default:
@@ -95,9 +102,9 @@ const Navigation = () => {
   if (!navigation && disableViewNavigator) return null;
 
   return (
-    <NavigationDiv sticky={stickyNavigation ? "1" : "0"}>
-      <div data-testid="date-navigator">{navigation && renderDateSelector()}</div>
-
+    <NavigationDiv className="rs__navigation" sticky={stickyNavigation ? "1" : "0"}>
+      <div className="rs__date_navigator" data-testid="date-navigator">{navigation && renderDateSelector()}</div>
+      {children}
       <div
         className="rs__view_navigator"
         data-testid="view-navigator"
@@ -106,6 +113,7 @@ const Navigation = () => {
         }}
       >
         <Button
+          className="rs__navigation_button rs__navigation_today_button"
           onClick={() => handleSelectedDateChange(getTimeZonedDate(new Date(), timeZone))}
           aria-label={translations.navigation.today}
         >
@@ -114,6 +122,7 @@ const Navigation = () => {
         {enableAgenda &&
           (isDesktop ? (
             <Button
+              className={`rs__navigation_button rs__navigation_agenda_button ${agenda ? "rs__active" : ""}`}
               color={agenda ? "primary" : "inherit"}
               onClick={toggleAgenda}
               aria-label={translations.navigation.agenda}
@@ -122,6 +131,7 @@ const Navigation = () => {
             </Button>
           ) : (
             <IconButton
+              className={`rs__navigation_button rs__navigation_agenda_button ${agenda ? "rs__active" : ""}`}
               color={agenda ? "primary" : "default"}
               style={{ padding: 5 }}
               onClick={toggleAgenda}
@@ -132,19 +142,27 @@ const Navigation = () => {
 
         {views.length > 1 &&
           (isDesktop ? (
-            views.map((v) => (
-              <Button
-                key={v}
-                color={v === view ? "primary" : "inherit"}
-                onClick={() => handleChangeView(v)}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  handleChangeView(v);
-                }}
-              >
-                {translations.navigation[v]}
-              </Button>
-            ))
+            <Box className="rs__navigation_view_buttons" sx={{
+              display: 'flex',
+              gap: '10px',
+            }}>
+              {
+                views.map((v) => (
+                  <Button
+                    key={v}
+                    color={v === view ? "primary" : "inherit"}
+                    className={`rs__navigation_button ${v === view ? 'rs__active' : ''}`}
+                    onClick={() => handleChangeView(v)}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      handleChangeView(v);
+                    }}
+                  >
+                    {translations.navigation[v]}
+                  </Button>
+                ))
+              }
+            </Box>
           ) : (
             <Fragment>
               <IconButton

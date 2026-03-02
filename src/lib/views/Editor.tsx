@@ -23,16 +23,17 @@ import {
   InputTypes,
   ProcessedEvent,
   SchedulerHelpers,
+  ValueRecord,
 } from "../types";
 
 export type StateItem = {
-  value: any;
+  value: ValueRecord;
   validity: boolean;
   type: InputTypes;
   config?: FieldInputProps;
 };
 
-export type StateEvent = (ProcessedEvent & SelectedRange) | Record<string, any>;
+export type StateEvent = (ProcessedEvent & SelectedRange) | Record<string, ValueRecord>;
 
 const initialState = (fields: FieldProps[], event?: StateEvent): Record<string, StateItem> => {
   const customFields = {} as Record<string, StateItem>;
@@ -41,7 +42,7 @@ const initialState = (fields: FieldProps[], event?: StateEvent): Record<string, 
     const eveVal = arraytizeFieldVal(field, event?.[field.name], event);
 
     customFields[field.name] = {
-      value: eveVal.value || defVal.value || "",
+      value: (eveVal.value || defVal.value || "") as ValueRecord,
       validity: field.config?.required ? !!eveVal.validity || !!defVal.validity : true,
       type: field.type,
       config: field.config,
@@ -104,7 +105,7 @@ const Editor = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleEditorState = (name: string, value: any, validity: boolean) => {
+  const handleEditorState = (name: string, value: string | Date, validity: boolean) => {
     setState((prev) => {
       return {
         ...prev,
@@ -131,10 +132,15 @@ const Editor = () => {
     try {
       triggerLoading(true);
       // Auto fix date
-      body.end =
-        body.start >= body.end
-          ? addMinutes(body.start, differenceInMinutes(selectedRange?.end!, selectedRange?.start!))
-          : body.end;
+      body.end = body.start >= body.end
+        ? addMinutes(
+            body.start, 
+            differenceInMinutes(
+              selectedRange?.end ?? new Date(), 
+              selectedRange?.start ?? new Date()
+            )
+          )
+        : body.end;
       // Specify action
       const action: EventActions = selectedEvent?.event_id ? "edit" : "create";
       // Trigger custom/remote when provided
@@ -163,7 +169,7 @@ const Editor = () => {
       case "input":
         return (
           <EditorInput
-            value={stateItem.value}
+            value={stateItem.value as string}
             name={key}
             onChange={handleEditorState}
             touched={touched}
@@ -174,7 +180,7 @@ const Editor = () => {
       case "date":
         return (
           <EditorDatePicker
-            value={stateItem.value}
+            value={stateItem.value as Date | string}
             name={key}
             onChange={(...args) => handleEditorState(...args, true)}
             touched={touched}
@@ -186,7 +192,7 @@ const Editor = () => {
         const field = fields.find((f) => f.name === key);
         return (
           <EditorSelect
-            value={stateItem.value}
+            value={stateItem.value as string}
             name={key}
             options={field?.options || []}
             onChange={handleEditorState}

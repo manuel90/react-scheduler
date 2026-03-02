@@ -98,6 +98,7 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     direction,
     dialogMaxWidth,
     hourFormat,
+    navigationSlot,
     ...otherProps
   } = props;
 
@@ -132,6 +133,7 @@ export const defaultProps = (props: Partial<SchedulerProps>) => {
     draggable: true,
     agenda,
     enableAgenda: typeof agenda === "undefined" || agenda,
+    navigationSlot,
     ...otherProps,
   };
 };

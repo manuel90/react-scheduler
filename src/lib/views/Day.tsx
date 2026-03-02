@@ -1,5 +1,6 @@
 import { useEffect, useCallback, Fragment } from "react";
 import { Typography } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import {
   format,
   eachMinuteOfInterval,
@@ -146,8 +147,10 @@ const Day = () => {
       return (
         <>
           {/* Header */}
-          <TableGrid days={1} sticky="1" stickyNavigation={stickyNavigation}>
-            <span className="rs__cell"></span>
+          <TableGrid className="rs__tablegrid_header" days={1} sticky="1" stickyNavigation={stickyNavigation}>
+            <span className="rs__cell rs__time rs__timecell">
+              <AccessTimeIcon sx={{ fontSize: 14 }} />
+            </span>
             <span
               className={`rs__cell rs__header ${isToday(selectedDate) ? "rs__today_cell" : ""}`}
               style={{ height: headerHeight }}
@@ -160,7 +163,7 @@ const Day = () => {
               {renderMultiDayEvents(resourcedEvents)}
             </span>
           </TableGrid>
-          <TableGrid days={1}>
+          <TableGrid className="rs__tablegrid_cells" days={1}>
             {/* Body */}
             {hours.map((h, i) => {
               const start = new Date(`${format(selectedDate, "yyyy/MM/dd")} ${format(h, hFormat)}`);

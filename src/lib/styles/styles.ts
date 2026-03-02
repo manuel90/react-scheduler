@@ -51,6 +51,7 @@ export const NavigationDiv = styled(Paper)<{ sticky?: string }>(({ sticky = "0" 
     display: "flex",
     alignItems: "center",
   },
+  backgroundColor: "transparent",
 }));
 
 export const AgendaDiv = styled("div")(({ theme }) => ({
@@ -112,7 +113,6 @@ export const TableGrid = styled("div")<{
     borderWidth: "0 0 1px 1px",
   },
   "& .rs__cell": {
-    background: theme.palette.background.paper,
     position: "relative",
     borderStyle: "solid",
     borderColor: theme.palette.grey[300],
@@ -229,12 +229,14 @@ export const TimeIndicatorBar = styled("div")(({ theme }) => ({
     height: 12,
     width: 12,
     borderRadius: "50%",
-    background: theme.palette.error.light,
+    backgroundColor: theme.palette.error.light,
     marginLeft: -6,
     marginTop: -5,
   },
   "& > div:last-of-type": {
-    borderTop: `solid 2px ${theme.palette.error.light}`,
+    borderTopWidth: "2px",
+    borderTopStyle: "solid",
+    borderTopColor: theme.palette.error.light,
     width: "100%",
   },
 }));

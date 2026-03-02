@@ -14,13 +14,13 @@ const TodayTypo = ({ date, onClick, locale }: TodayTypoProps) => {
   const today = isTimeZonedToday({ dateLeft: date, timeZone });
 
   return (
-    <div>
+    <div className="rs__today_typo">
       <Typography
         style={{
           fontWeight: today ? "bold" : "inherit",
         }}
         color={today ? "primary" : "inherit"}
-        className={onClick ? "rs__hover__op" : ""}
+        className={`rs__today_dd ${onClick ? "rs__hover__op" : ""}`}
         onClick={(e) => {
           e.stopPropagation();
           if (onClick) onClick(date);
@@ -29,10 +29,10 @@ const TodayTypo = ({ date, onClick, locale }: TodayTypoProps) => {
         {format(date, "dd", { locale })}
       </Typography>
       <Typography
+        className="rs__today_eee"
         color={today ? "primary" : "inherit"}
         style={{
           fontWeight: today ? "bold" : "inherit",
-          fontSize: 11,
         }}
       >
         {format(date, "eee", { locale })}

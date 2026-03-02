@@ -41,11 +41,12 @@ const MonthDateBtn = ({ selectedDate, onChange }: MonthDateBtnProps) => {
     <>
       <LocaleArrow
         type="prev"
+        className="rs__arrow rs__arrow_prev"
         onClick={handlePrev}
         disabled={prevDisabled}
         aria-label="previous month"
       />
-      <Button style={{ padding: 4 }} onClick={handleOpen} aria-label="selected month">
+      <Button className="rs__selection rs__selected_month" style={{ padding: 4 }} onClick={handleOpen} aria-label="selected month">
         {format(selectedDate, "MMMM yyyy", { locale })}
       </Button>
       <Popover
@@ -69,6 +70,7 @@ const MonthDateBtn = ({ selectedDate, onChange }: MonthDateBtnProps) => {
       </Popover>
       <LocaleArrow
         type="next"
+        className="rs__arrow rs__arrow_next"
         onClick={handleNext}
         disabled={nextDisabled}
         aria-label="next month"

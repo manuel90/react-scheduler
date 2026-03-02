@@ -10,9 +10,9 @@ import useStore from "./hooks/useStore";
 import { SchedulerRef } from "./types";
 import { PositionProvider } from "./positionManger/provider";
 
-const SchedulerComponent = forwardRef<SchedulerRef, unknown>(function SchedulerComponent(_, ref) {
+const SchedulerComponent = forwardRef<SchedulerRef, unknown>(function SchedulerComponent(/*_, ref*/) {
   const store = useStore();
-  const { view, dialog, loading, loadingComponent, resourceViewMode, resources, translations } =
+  const { view, dialog, loading, loadingComponent, resourceViewMode, resources, translations, navigationSlot } =
     store;
 
   const Views = useMemo(() => {
@@ -47,18 +47,20 @@ const SchedulerComponent = forwardRef<SchedulerRef, unknown>(function SchedulerC
     <Wrapper
       dialog={dialog ? 1 : 0}
       data-testid="rs-wrapper"
-      ref={(el) => {
-        const calendarRef = ref as any;
-        if (calendarRef) {
-          calendarRef.current = {
-            el,
-            scheduler: store,
-          };
-        }
-      }}
+      className="rs__wrapper"
+      // TODO: Remove these lines before some testing:
+      // ref={(el) => {
+      //   const calendarRef = ref as any;
+      //   if (calendarRef) {
+      //     calendarRef.current = {
+      //       el,
+      //       scheduler: store,
+      //     };
+      //   }
+      // }}
     >
       {loading ? LoadingComp : null}
-      <Navigation />
+      <Navigation>{navigationSlot}</Navigation>
       <Table
         resource_count={resourceViewMode === "default" ? resources.length : 1}
         // Temp resources/default `sticky` wontfix
@@ -67,6 +69,7 @@ const SchedulerComponent = forwardRef<SchedulerRef, unknown>(function SchedulerC
           flexDirection: resourceViewMode === "vertical" ? "column" : undefined,
         }}
         data-testid="grid"
+        className="rs__wrapper_tablegrid"
       >
         <PositionProvider>{Views}</PositionProvider>
       </Table>

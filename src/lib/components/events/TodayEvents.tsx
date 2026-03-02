@@ -5,6 +5,7 @@ import { isTimeZonedToday, traversCrossingEvents } from "../../helpers/generals"
 import { ProcessedEvent } from "../../types";
 import CurrentTimeBar from "./CurrentTimeBar";
 import EventItem from "./EventItem";
+import useIsClient from "../../hooks/useIsClient";
 
 interface TodayEventsProps {
   todayEvents: ProcessedEvent[];
@@ -28,9 +29,11 @@ const TodayEvents = ({
 }: TodayEventsProps) => {
   const crossingIds: Array<number | string> = [];
 
+  const isClient = useIsClient();
+
   return (
     <Fragment>
-      {isTimeZonedToday({ dateLeft: today, timeZone }) && (
+      {isTimeZonedToday({ dateLeft: today, timeZone }) && isClient && (
         <CurrentTimeBar
           startHour={startHour}
           step={step}
@@ -40,7 +43,7 @@ const TodayEvents = ({
         />
       )}
 
-      {todayEvents.map((event, i) => {
+      {isClient && todayEvents.map((event, i) => {
         const maxHeight = (endHour * 60 - startHour * 60) * minuteHeight;
         const eventHeight = differenceInMinutes(event.end, event.start) * minuteHeight;
         const height = Math.min(eventHeight, maxHeight) - BORDER_HEIGHT;
@@ -65,7 +68,7 @@ const TodayEvents = ({
         return (
           <div
             key={`${event.event_id}/${event.recurrenceId || ""}`}
-            className="rs__event__item"
+            className={`rs__event__item ${event.type ? 'rs__item_type_' + event.type : ""}`}
             style={{
               height: height + heightBorderFactor,
               top,

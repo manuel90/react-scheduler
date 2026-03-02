@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useState } from "react";
 import DateProvider from "../hoc/DateProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -64,11 +64,15 @@ const EditorDatePicker = ({
     [errMsg, name, onChange, required, translations?.validation?.required]
   );
 
+  const onHandleChange = useEffectEvent((val: string | Date) => {
+    handleChange(val);
+  });
+
   useEffect(() => {
     if (touched) {
-      handleChange(value);
+      onHandleChange(value);
     }
-  }, [handleChange, touched, value]);
+  }, [touched, value]);
 
   return (
     <DateProvider>

@@ -30,7 +30,6 @@ const CurrentTimeBar = (props: CurrentTimeBarProps) => {
 
   useEffect(() => {
     const calcProps = { startHour, step, minuteHeight, timeZone };
-    setTop(calculateTop(calcProps));
     const interval = setInterval(() => setTop(calculateTop(calcProps)), 60 * 1000);
     return () => clearInterval(interval);
   }, [startHour, step, minuteHeight, timeZone]);
@@ -40,8 +39,8 @@ const CurrentTimeBar = (props: CurrentTimeBarProps) => {
 
   return (
     <TimeIndicatorBar style={{ top, zIndex: props.zIndex }}>
-      <div />
-      <div />
+      <div className="rs__dot" />
+      <div className="rs__line" />
     </TimeIndicatorBar>
   );
 };

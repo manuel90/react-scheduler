@@ -1,9 +1,10 @@
 import { Fragment, MouseEvent, useCallback, useMemo, useState } from "react";
-import { Typography, ButtonBase, useTheme } from "@mui/material";
+import { Typography, ButtonBase, useTheme, Box } from "@mui/material";
 import { format } from "date-fns";
 import { ProcessedEvent } from "../../types";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { EventItemPaper } from "../../styles/styles";
 import { differenceInDaysOmitTime, getHourFormat } from "../../helpers/generals";
 import useStore from "../../hooks/useStore";
@@ -59,7 +60,7 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
     }
 
     let item = (
-      <div style={{ padding: "2px 6px" }}>
+      <div className="rs__event_item_content" style={{ padding: "2px 6px" }}>
         <Typography variant="subtitle2" style={{ fontSize: 12 }} noWrap>
           {event.title}
         </Typography>
@@ -69,17 +70,21 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
           </Typography>
         )}
         {showdate && (
-          <Typography style={{ fontSize: 11 }} noWrap>
-            {`${format(event.start, hFormat, {
-              locale,
-            })} - ${format(event.end, hFormat, { locale })}`}
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <AccessTimeIcon sx={{ fontSize: 11 }} />
+            <Typography style={{ fontSize: 11 }} noWrap>
+              {`${format(event.start, hFormat, {
+                locale,
+              })} - ${format(event.end, hFormat, { locale })}`}
+            </Typography>
+          </Box>
         )}
       </div>
     );
     if (multiday) {
       item = (
         <div
+          className="rs__event_item_content"
           style={{
             padding: 2,
             display: "flex",
@@ -110,6 +115,7 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
     return (
       <EventItemPaper
         key={`${event.start.getTime()}_${event.end.getTime()}_${event.event_id}`}
+        className="rs__event_item"
         disabled={event.disabled}
         sx={{
           bgcolor: event.disabled ? "#d0d0d0" : event.color || theme.palette.primary.main,
@@ -118,6 +124,7 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
         }}
       >
         <ButtonBase
+          className="rs__button_event_item"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -133,7 +140,7 @@ const EventItem = ({ event, multiday, hasPrev, hasNext, showdate = true }: Event
           disableRipple={disableViewer}
           disabled={event.disabled}
         >
-          <div {...dragProps} draggable={canDrag}>
+          <div className="rs__inner_button_event_item" {...dragProps} draggable={canDrag}>
             {item}
           </div>
         </ButtonBase>

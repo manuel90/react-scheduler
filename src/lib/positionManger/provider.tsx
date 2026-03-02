@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { PositionManagerState, PositionContext } from "./context";
 import useStore from "../hooks/useStore";
 import { DefaultResource, FieldProps, ProcessedEvent, ResourceFields } from "../types";
@@ -55,7 +55,7 @@ const setEventPositionsWithResources = (
     for (const resource of resources) {
       const resourcedEvents = getResourcedEvents(sorted, resource, rFields, fields);
       const positions = setEventPositions(resourcedEvents);
-      slots[resource[rFields.idField]] = positions;
+      slots[resource[rFields.idField] as string] = positions;
     }
   } else {
     slots.all = setEventPositions(sorted);
@@ -68,8 +68,8 @@ export const PositionProvider = ({ children }: Props) => {
   const [state, set] = useState<PositionManagerState>({
     renderedSlots: setEventPositionsWithResources(events, resources, resourceFields, fields, view),
   });
-
-  useEffect(() => {
+  
+  const onHandleSetPositionManagerState = useEffectEvent(() => {
     set((prev) => ({
       ...prev,
       renderedSlots: setEventPositionsWithResources(
@@ -80,6 +80,9 @@ export const PositionProvider = ({ children }: Props) => {
         view
       ),
     }));
+  });
+  useEffect(() => {
+    onHandleSetPositionManagerState();
   }, [events, fields, resourceFields, resources, view]);
 
   const setRenderedSlot = (day: string, eventId: string, position: number, resourceId?: string) => {

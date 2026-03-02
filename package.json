@@ -1,6 +1,6 @@
 {
-  "name": "@aldabil/react-scheduler",
-  "version": "3.1.2",
+  "name": "@manuel90/react-scheduler",
+  "version": "1.0.0",
   "description": "React scheduler component based on Material-UI & date-fns",
   "files": [
     "*"
@@ -9,7 +9,6 @@
   "scripts": {
     "start": "vite serve",
     "build": "vite build --mode production",
-    "postbuild": "node ./scripts/post-pack.js",
     "local:pack": "npm run build && cd dist && npm pack && mv *.tgz ../",
     "format": "prettier --check \"**/*.{js,jsx,ts,tsx,json}\"",
     "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
@@ -40,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aldabil21/react-scheduler.git"
+    "url": "https://github.com/manuel90/react-scheduler.git"
   },
   "keywords": [
     "react",
@@ -48,10 +47,10 @@
     "calendar",
     "scheduler"
   ],
-  "author": "Aldabil",
+  "author": "Manuel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aldabil21/react-scheduler/issues"
+    "url": "https://github.com/manuel90/react-scheduler/issues"
   },
   "devDependencies": {
     "@emotion/react": "^11.14.0",
@@ -87,8 +86,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
-    "react": ">=19.0.0",
-    "react-dom": "^19.0.0",
+    "react": ">=19.2.0",
+    "react-dom": ">=19.2.0",
     "react-router-dom": "^7.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rrule": "^2.8.1",

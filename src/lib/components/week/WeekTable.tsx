@@ -24,6 +24,7 @@ import TodayTypo from "../common/TodayTypo";
 import usePosition from "../../positionManger/usePosition";
 import EventItem from "../events/EventItem";
 import { Typography } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TodayEvents from "../events/TodayEvents";
 import Cell from "../common/Cell";
 
@@ -133,8 +134,11 @@ const WeekTable = ({
         ref={headersRef}
         sticky="1"
         stickyNavigation={stickyNavigation}
+        className="rs__tablegrid_header"
       >
-        <span className="rs__cell rs__time"></span>
+        <span className="rs__cell rs__time rs__timecell">
+          <AccessTimeIcon sx={{ fontSize: 14 }} />
+        </span>
         {daysList.map((date, i) => (
           <span
             key={i}
@@ -155,7 +159,7 @@ const WeekTable = ({
         ))}
       </TableGrid>
       {/* Time Cells */}
-      <TableGrid days={daysList.length} ref={bodyRef}>
+      <TableGrid className="rs__tablegrid_cells" days={daysList.length} ref={bodyRef}>
         {hours.map((h, i) => (
           <Fragment key={i}>
             <span style={{ height: cellHeight }} className="rs__cell rs__header rs__time">
@@ -192,6 +196,7 @@ const WeekTable = ({
                     resourceKey={field}
                     resourceVal={resource ? resource[field] : null}
                     cellRenderer={cellRenderer}
+                    timeZone={timeZone}
                   />
                 </span>
               );

@@ -9,7 +9,7 @@ interface Props {
   resourceKey: string;
   resourceVal: string | number;
 }
-export const useCellAttributes = ({ start, end, resourceKey, resourceVal }: Props) => {
+const useCellAttributes = ({ start, end, resourceKey, resourceVal }: Props) => {
   const {
     triggerDialog,
     onCellClick,
@@ -65,3 +65,5 @@ export const useCellAttributes = ({ start, end, resourceKey, resourceVal }: Prop
     [resourceKey]: resourceVal,
   };
 };
+
+export default useCellAttributes;

@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@mui/material";
-import { useCellAttributes } from "../../hooks/useCellAttributes";
+import useCellAttribute from "../../hooks/useCellAttributes";
 import { CellRenderedProps } from "../../types";
+import useIsClient from "../../hooks/useIsClient";
 
 interface CellProps {
   day: Date;
@@ -11,6 +14,7 @@ interface CellProps {
   resourceVal: string | number;
   cellRenderer?(props: CellRenderedProps): React.ReactNode;
   children?: React.ReactNode;
+  timeZone?: string;
 }
 
 const Cell = ({
@@ -22,8 +26,10 @@ const Cell = ({
   cellRenderer,
   height,
   children,
+  timeZone,
 }: CellProps) => {
   const props = useCellAttributes({ start, end, resourceKey, resourceVal });
+  const isClient = useIsClient();
 
   if (cellRenderer) {
     return cellRenderer({
@@ -36,16 +42,23 @@ const Cell = ({
   }
 
   return (
-    <Button
-      fullWidth
-      aria-label={`${start.toLocaleString("en", {
-        dateStyle: "full",
-        timeStyle: "long",
-      })} - ${end.toLocaleString("en", { dateStyle: "full", timeStyle: "long" })}`}
-      {...props}
-    >
-      {children}
-    </Button>
+    <>
+    {
+      isClient && (
+        <Button
+          fullWidth
+          aria-label={`${start.toLocaleString("en", {
+            dateStyle: "full",
+            timeStyle: "long",
+            timeZone,
+          })} - ${end.toLocaleString("en", { dateStyle: "full", timeStyle: "long", timeZone })}`}
+          {...props}
+        >
+          {children}
+        </Button>
+      )
+    }
+    </>
   );
 };
 

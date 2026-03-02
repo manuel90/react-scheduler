@@ -1,12 +1,14 @@
 import { DialogProps, GridSize } from "@mui/material";
 import { DateCalendarProps } from "@mui/x-date-pickers";
 import { Locale } from "date-fns";
-import { DragEvent } from "react";
+import React, { DragEvent } from "react";
 import { SelectOption } from "./components/inputs/SelectInput";
 import { View } from "./components/nav/Navigation";
 import { Store } from "./store/types";
 import { StateItem } from "./views/Editor";
 import type { RRule } from "rrule";
+
+export type ValueRecord = string | number | boolean | Date | null | React.ReactNode | undefined | RRule;
 
 export type DayHours =
   | 0
@@ -56,7 +58,7 @@ interface CommonViewProps {
   step: number;
 }
 
-export interface MonthProps extends CommonWeekViewProps, CommonViewProps {}
+export interface MonthProps extends CommonWeekViewProps, CommonViewProps { }
 
 export interface WeekProps extends CommonWeekViewProps, CommonViewProps {
   hourRenderer?(hour: string): React.ReactNode;
@@ -186,10 +188,10 @@ export interface FieldProps {
   type: InputTypes;
   /** Required for type="select" */
   options?: Array<SelectOption>;
-  default?: string | number | Date | any;
+  default?: string | number | Date;
   config?: FieldInputProps;
 }
-export type ProcessedEvent = CalendarEvent & Record<string, any>;
+export type ProcessedEvent = CalendarEvent & Record<string, ValueRecord | ValueRecord[]>;
 export type EventActions = "create" | "edit";
 export type RemoteQuery = {
   start: Date;
@@ -202,7 +204,7 @@ export type DefaultResource = {
   subtext?: string;
   avatar?: string;
   color?: string;
-} & Record<string, any>;
+} & Record<string, ValueRecord>;
 export type ResourceFields = {
   idField: string;
   textField: string;
@@ -271,8 +273,8 @@ export interface SchedulerProps {
   customViewer?(event: ProcessedEvent, close: () => void): React.ReactNode;
   /**Additional component in event viewer popper */
   viewerExtraComponent?:
-    | React.ReactNode
-    | ((fields: FieldProps[], event: ProcessedEvent) => React.ReactNode);
+  | React.ReactNode
+  | ((fields: FieldProps[], event: ProcessedEvent) => React.ReactNode);
   /**Override viewer title component */
   viewerTitleComponent?(event: ProcessedEvent): React.ReactNode;
   /**Override viewer subtitle component */
@@ -365,11 +367,13 @@ export interface SchedulerProps {
    *
    */
   onCellClick?(start: Date, end: Date, resourceKey?: string, resourceVal?: string | number): void;
+  /**
+   * 
+   */
+  navigationSlot?: React.ReactNode;
 }
 
 export interface SchedulerRef {
   el: HTMLDivElement;
   scheduler: Store;
 }
-
-export interface Scheduler extends Partial<SchedulerProps> {}

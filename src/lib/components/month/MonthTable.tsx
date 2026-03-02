@@ -102,14 +102,14 @@ const MonthTable = ({ daysList, resource, eachWeekStart }: Props) => {
                       height: 27,
                       position: "absolute",
                       top: 0,
-                      background: isToday ? theme.palette.secondary.main : "transparent",
-                      color: isToday ? theme.palette.secondary.contrastText : "",
+                      background: isToday ? `var(--rs-today-background, ${theme.palette.secondary.main})` : "transparent",
+                      color: isToday ? `var(--rs-today-color, ${theme.palette.secondary.contrastText})` : "",
                       marginBottom: 2,
                     }}
                   >
                     <Typography
                       color={!isSameMonth(today, monthStart) ? "#ccc" : "textPrimary"}
-                      className={!disableGoToDay ? "rs__hover__op" : ""}
+                      className={`rs__month_day_value ${!disableGoToDay ? "rs__hover__op" : ""}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (!disableGoToDay) {
@@ -180,6 +180,7 @@ const MonthTable = ({ daysList, resource, eachWeekStart }: Props) => {
         indent="0"
         sticky="1"
         stickyNavigation={stickyNavigation}
+        className="rs__tablegrid_header"
       >
         {daysList.map((date, i) => (
           <Typography
@@ -193,7 +194,7 @@ const MonthTable = ({ daysList, resource, eachWeekStart }: Props) => {
         ))}
       </TableGrid>
       {/* Time Cells */}
-      <TableGrid days={daysList.length} ref={bodyRef} indent="0">
+      <TableGrid className="rs__tablegrid_cells" days={daysList.length} ref={bodyRef} indent="0">
         {renderCells(resource)}
       </TableGrid>
     </>

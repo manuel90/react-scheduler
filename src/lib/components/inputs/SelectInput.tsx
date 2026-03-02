@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useEffectEvent } from "react";
 import {
   FormControl,
   FormHelperText,
@@ -17,7 +17,7 @@ import useStore from "../../hooks/useStore";
 export type SelectOption = {
   id: string | number;
   text: string;
-  value: any;
+  value: string;
 };
 interface EditorSelectProps {
   options: Array<SelectOption>;
@@ -69,8 +69,7 @@ const EditorSelect = ({
     }
   }, [errMsg, state.touched]);
   const handleChange = useCallback(
-    (value: string | any) => {
-      const val = value;
+    (val: string) => {
       let isValid = true;
       let errorMsg = errMsg;
       if (required && (multiple ? !val.length : !val)) {
@@ -85,11 +84,15 @@ const EditorSelect = ({
     [errMsg, multiple, name, onChange, required, translations?.validation?.required]
   );
 
+  const onHandleChange = useEffectEvent((val: string) => {
+    handleChange(val);
+  });
+
   useEffect(() => {
     if (touched) {
-      handleChange(value);
+      onHandleChange(value);
     }
-  }, [handleChange, touched, value]);
+  }, [touched, value]);
   return (
     <>
       <FormControl
@@ -115,7 +118,7 @@ const EditorSelect = ({
           classes={{
             select: multiple === "chips" ? "flex__wrap" : undefined,
           }}
-          renderValue={(selected: string | Array<any> | any) => {
+          renderValue={(selected: string | Array<string>) => {
             if (!selected || selected.length === 0) {
               return <em>{label}</em>;
             }

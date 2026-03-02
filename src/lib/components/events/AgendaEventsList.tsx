@@ -66,6 +66,7 @@ const AgendaEventsList = ({ day, events }: AgendaEventsListProps) => {
           return (
             <ListItemButton
               key={`${event.start.getTime()}_${event.end.getTime()}_${event.event_id}`}
+              className={`rs__agenda_item ${event.type ? `rs__agenda_item_type_${event.type}` : ""}`}
               focusRipple
               disableRipple={disableViewer}
               tabIndex={disableViewer ? -1 : 0}
@@ -82,19 +83,19 @@ const AgendaEventsList = ({ day, events }: AgendaEventsListProps) => {
                 }
               }}
             >
-              <ListItemAvatar>
+              <ListItemAvatar className="rs__agenda_item_avatar">
                 <Avatar
                   sx={{
-                    bgcolor: event.disabled ? "#d0d0d0" : event.color || theme.palette.primary.main,
+                    bgcolor: event.disabled ? "var(--rs-disabled-background, #d0d0d0)" : event.color || theme.palette.primary.main,
                     color: event.disabled
-                      ? "#808080"
+                      ? "var(--rs-disabled-color, #808080)"
                       : event.textColor || theme.palette.primary.contrastText,
                   }}
                 >
                   {event.agendaAvatar || " "}
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={event.title} secondary={`${startDate} - ${endDate}`} />
+              <ListItemText className="rs__agenda_item_text" primary={event.title} secondary={`${startDate} - ${endDate}`} />
             </ListItemButton>
           );
         })}
